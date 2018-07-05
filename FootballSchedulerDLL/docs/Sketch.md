@@ -7,7 +7,8 @@ Classes:
 + [ ] KnockOutScheduler - generating cup
 ## Details
 ### IScheduler
-+ bool LoadLeague(League) - check number of teams
++ void LoadLeague(League) - 
++ bool LoadTeams(Teams) - check number of teams
 + void GenerateSchedule()
 + List\<Matches\> GetSchedule - returns generated schedule
 ### RoundRobinScheduler
