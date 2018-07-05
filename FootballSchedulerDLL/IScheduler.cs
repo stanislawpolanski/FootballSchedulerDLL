@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootballSchedulerDLL
 {
-    public class Class1
+    interface IScheduler
     {
     }
 }

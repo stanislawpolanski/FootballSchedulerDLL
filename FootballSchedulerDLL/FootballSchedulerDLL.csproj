@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="FootballSchedulerWPFEntities\Districts.cs" />
+    <Compile Include="FootballSchedulerWPFEntities\Leagues.cs" />
+    <Compile Include="FootballSchedulerWPFEntities\Matches.cs" />
+    <Compile Include="FootballSchedulerWPFEntities\Teams.cs" />
+    <Compile Include="IScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
