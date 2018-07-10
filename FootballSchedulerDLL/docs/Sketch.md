@@ -8,13 +8,13 @@ Classes:
 ## Details
 ### IScheduler
 + void LoadLeague(League) - 
-+ bool LoadTeams(Teams) - check number of teams
++ bool LoadTeams(Teams) - check number of teams (> 1, even)
 + void GenerateSchedule()
 + List\<Matches\> GetSchedule - returns generated schedule
 ### RoundRobinScheduler
 aa.
 ### KnockOutScheduler
-aa.
+aa. - will not be implemented right now
 
 
 
