@@ -10,7 +10,7 @@ namespace FootballSchedulerDLL
         private List<Teams> LoadedTeams;
         private Leagues LoadedLeague;
 
-        public DateTime YearOfStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DateTime YearOfStart { get; set; }
 
         public RoundRobinScheduler()
         {
@@ -28,13 +28,21 @@ namespace FootballSchedulerDLL
             if (this.LoadedLeague == null)
                 throw new InvalidOperationException("No league assigned");
 
-            //if ok then generate schedule
-
+            //prepare collections and get the fixed team
             Queue<Teams> teamsQueue = new Queue<Teams>(this.LoadedTeams);
             Teams fixedTeam = teamsQueue.Dequeue();
 
-            this.Schedule = new List<Matches>();
+            //prepare datetime - matches played on sundays
+            DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 2, 1);
+            while (firstRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
+                firstRoundStartDate.AddDays(1);
 
+            DateTime secondRoundStartDate = new DateTime(YearOfStart.Year, 8, 1);
+            while (secondRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
+                secondRoundStartDate.AddDays(1);
+
+            //generate the schedule
+            this.Schedule = new List<Matches>();
             for (int round = 1; round < teamsQueue.Count; round++)
             {
                 LinkedList<Teams> teamsLinkedList = new LinkedList<Teams>(teamsQueue);
@@ -45,34 +53,30 @@ namespace FootballSchedulerDLL
                     Teams t1 = teamsLinkedList.First.Value;
                     Teams t2 = teamsLinkedList.Last.Value;
 
-                    if(round % 2 == 0)
-                    {
-                        //TODO: set dates
-                        Matches m1 = new Matches();
-                        m1.HomeTeamId = t1.Id;
-                        m1.AwayTeamId = t2.Id;
+                    Matches m1 = new Matches();
+                    m1.HomeTeamId = t1.Id;
+                    m1.AwayTeamId = t2.Id;
+                    m1.TimeOfPlay = firstRoundStartDate.AddDays(7 * (round - 1));
 
-                        Matches m2 = new Matches();
-                        m2.HomeTeamId = t2.Id;
-                        m2.AwayTeamId = t1.Id;
-                    }
-                    else
-                    {
-                        //TODO: fill this
-                    }
+                    Matches m2 = new Matches();
+                    m2.HomeTeamId = t2.Id;
+                    m2.AwayTeamId = t1.Id;
+                    m2.TimeOfPlay = secondRoundStartDate.AddDays(7 * (round - 1));
 
 
                     teamsLinkedList.RemoveFirst();
                     teamsLinkedList.RemoveLast();
+
+                    //every even round switch every home & away team
+                    if(round % 2 != 0)
+                    {
+                        Matches mTemp = m1;
+                        m1 = m2;
+                        m1 = mTemp;
+                    }
                 }
                 while (teamsLinkedList.Count > 1);
             }
-
-
-
-
-            //TODO implement
-            throw new NotImplementedException();
         }
 
         public List<Matches> GetSchedule()
