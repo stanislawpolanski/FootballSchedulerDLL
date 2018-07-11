@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballSchedulerDLL", "FootballSchedulerDLL\FootballSchedulerDLL.csproj", "{2CD98856-E3DE-4C7B-B3EA-7E889D0C7E71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballSchedulerDLLTests", "FootballSchedulerDLLTests\FootballSchedulerDLLTests.csproj", "{2F7F8684-FC80-4CA8-A05A-B12B1DAA7FE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2CD98856-E3DE-4C7B-B3EA-7E889D0C7E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CD98856-E3DE-4C7B-B3EA-7E889D0C7E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CD98856-E3DE-4C7B-B3EA-7E889D0C7E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7F8684-FC80-4CA8-A05A-B12B1DAA7FE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7F8684-FC80-4CA8-A05A-B12B1DAA7FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7F8684-FC80-4CA8-A05A-B12B1DAA7FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7F8684-FC80-4CA8-A05A-B12B1DAA7FE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
