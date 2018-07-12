@@ -94,7 +94,7 @@ namespace FootballSchedulerDLL
         public bool LoadTeams(List<Teams> teams)
         {
             //check if there are at least two teams and the team's number is even
-            if (teams.Count < 2 || teams.Count % 2 != 0)
+            if (teams.Count < 2 || teams.Count % 2 != 0 || teams == null)
                 return false;
 
             //if the check above is ok then assign the property and return true
