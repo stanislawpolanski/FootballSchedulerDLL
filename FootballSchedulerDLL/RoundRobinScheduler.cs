@@ -4,7 +4,7 @@ using FootballSchedulerWPF;
 
 namespace FootballSchedulerDLL
 {
-    class RoundRobinScheduler : IScheduler
+    public class RoundRobinScheduler : IScheduler
     {
         private List<Matches> Schedule;
         private List<Teams> LoadedTeams;
@@ -14,9 +14,6 @@ namespace FootballSchedulerDLL
 
         public RoundRobinScheduler()
         {
-            this.Schedule     = null;
-            this.LoadedTeams  = null;
-            this.LoadedLeague = null;
         }
 
         public void GenerateSchedule()

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using FootballSchedulerDLL;
+using FootballSchedulerWPF;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -10,10 +13,15 @@ namespace FootballSchedulerDLLTests
         [TestMethod]
         public void LoadTeams_WhenTeamsCountLessThanTwo_ReturnsFalse()
         {
-            throw new AssertInconclusiveException();
             //arrange
+            List<Teams> lt = new List<Teams>();
+            lt.Add(new Teams());
+
+            RoundRobinScheduler rrs = new RoundRobinScheduler();
             //act
+            bool loaded = rrs.LoadTeams(lt);
             //assert
+            Assert.IsFalse(loaded);
         }
 
         [TestMethod]
@@ -35,12 +43,22 @@ namespace FootballSchedulerDLLTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void GenerateSchedule_WhenTeamsOrLeagueIsNull_ThrowsInvalidOperationException()
+        public void LoadTeams_AllTeamsMustHaveDistinctiveId()
         {
             throw new AssertInconclusiveException();
             //arrange
             //act
+            //assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void GenerateSchedule_WhenTeamsOrLeagueNull_ThrowsInvalidOperationException()
+        {
+            //arrange
+            RoundRobinScheduler rrs = new RoundRobinScheduler();
+            //act
+            rrs.GenerateSchedule();
             //assert handled by ExpectedException
         }
 
