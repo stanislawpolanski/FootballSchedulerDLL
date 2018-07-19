@@ -10,12 +10,15 @@ namespace FootballSchedulerDLL
         private List<Teams> LoadedTeams;
         private Leagues LoadedLeague;
 
+        /// <summary>
+        /// Year of league's start. Only year is considered.
+        /// </summary>
         public DateTime YearOfStart { get; set; }
 
-        public RoundRobinScheduler()
-        {
-        }
-
+        /// <summary>
+        /// Calculates the schedule using inputs set before.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Thrown when no teams where loaded or no league loaded.</exception>
         public void GenerateSchedule()
         {
             //inputs check
@@ -25,24 +28,27 @@ namespace FootballSchedulerDLL
             if (this.LoadedLeague == null)
                 throw new InvalidOperationException("No league assigned");
 
-            //prepare collections and get the fixed team
+            //prepare queue list and get the fixed team
             Queue<Teams> teamsQueue = new Queue<Teams>(this.LoadedTeams);
             Teams fixedTeam = teamsQueue.Dequeue();
 
             //prepare datetime - matches played on sundays
-            DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 2, 1);
+            DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 2, 1, 15, 0, 0);
             while (firstRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
                 firstRoundStartDate = firstRoundStartDate.AddDays(1);
 
-            DateTime secondRoundStartDate = new DateTime(YearOfStart.Year, 8, 1);
+            DateTime secondRoundStartDate = new DateTime(YearOfStart.Year, 8, 1, 15, 0, 0);
             while (secondRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
                 secondRoundStartDate = secondRoundStartDate.AddDays(1);
 
-            //generate the schedule
+            //prepare the schedule
             this.Schedule = new List<Matches>();
+
+            //generate the schedule
             for (int round = 0; round < teamsQueue.Count; round++)
             {
-                //recreate team's list
+                //recreate team's list - reattach fixed team in the beginning
+                //linked list will change every round, but the fixed team must stay in the beginning all the time
                 LinkedList<Teams> teamsLinkedList = new LinkedList<Teams>(teamsQueue);
                 teamsLinkedList.AddFirst(fixedTeam);
 
@@ -51,6 +57,7 @@ namespace FootballSchedulerDLL
                     Teams t1 = teamsLinkedList.First.Value;
                     Teams t2 = teamsLinkedList.Last.Value;
 
+                    //each team must play both home and away
                     Matches m1 = new Matches();
                     m1.HomeTeamId = t1.Id;
                     m1.AwayTeamId = t2.Id;
@@ -86,6 +93,11 @@ namespace FootballSchedulerDLL
             }
         }
 
+        /// <summary>
+        /// Returns the generated schedule
+        /// </summary>
+        /// <returns>Matches to be played</returns>
+        /// <exception cref="System.NullReferenceException">Thrown when schedule has not been generated yet.</exception>
         public List<Matches> GetSchedule()
         {
             if (this.Schedule == null)
@@ -93,16 +105,27 @@ namespace FootballSchedulerDLL
             return this.Schedule;
         }
 
+        /// <summary>
+        /// Just loads a league for now.
+        /// </summary>
+        /// <param name="league">League with its name.</param>
         public void LoadLeague(Leagues league)
         {
             this.LoadedLeague = league;
         }
 
+        /// <summary>
+        /// Checks if the team's number is even and positive. Also checks if each team has distinctive id. If so
+        /// loads teams into and returns true. Otherwise does nothing and returns false.
+        /// </summary>
+        /// <param name="teams">List of teams to be checked and eventually loaded into.</param>
+        /// <returns></returns>
         public bool LoadTeams(List<Teams> teams)
         {
             //check if teams are not null
             if (teams == null)
                 return false;
+
             //check if there are at least two teams and the team's number is even
             if (teams.Count < 2 || teams.Count % 2 != 0)
                 return false;
