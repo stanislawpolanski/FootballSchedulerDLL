@@ -33,11 +33,11 @@ namespace FootballSchedulerDLL
             Teams fixedTeam = teamsQueue.Dequeue();
 
             //prepare datetime - matches played on sundays
-            DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 2, 1, 15, 0, 0);
+            DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 8, 1, 15, 0, 0);
             while (firstRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
                 firstRoundStartDate = firstRoundStartDate.AddDays(1);
 
-            DateTime secondRoundStartDate = new DateTime(YearOfStart.Year, 8, 1, 15, 0, 0);
+            DateTime secondRoundStartDate = new DateTime(YearOfStart.Year + 1, 2, 1, 15, 0, 0);
             while (secondRoundStartDate.DayOfWeek != DayOfWeek.Sunday)
                 secondRoundStartDate = secondRoundStartDate.AddDays(1);
 
