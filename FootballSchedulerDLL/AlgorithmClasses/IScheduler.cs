@@ -10,9 +10,9 @@ namespace FootballSchedulerDLL
     interface IScheduler
     {
         DateTime YearOfStart { get; set; }
-        void LoadLeague(Leagues league);
-        bool LoadTeams(List<Teams> teams);
+        void LoadLeague(League league);
+        bool LoadTeams(List<Team> teams);
         void GenerateSchedule();
-        List<Matches> GetSchedule();
+        List<Match> GetSchedule();
     }
 }

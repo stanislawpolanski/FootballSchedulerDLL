@@ -6,9 +6,9 @@ namespace FootballSchedulerDLL
 {
     public class RoundRobinScheduler : IScheduler
     {
-        private List<Matches> Schedule;
-        private List<Teams> LoadedTeams;
-        private Leagues LoadedLeague;
+        private List<Match> Schedule;
+        private List<Team> LoadedTeams;
+        private League LoadedLeague;
 
         /// <summary>
         /// Year of league's start. Only year is considered.
@@ -29,8 +29,8 @@ namespace FootballSchedulerDLL
                 throw new InvalidOperationException("No league assigned");
 
             //prepare queue list and get the fixed team
-            Queue<Teams> teamsQueue = new Queue<Teams>(this.LoadedTeams);
-            Teams fixedTeam = teamsQueue.Dequeue();
+            Queue<Team> teamsQueue = new Queue<Team>(this.LoadedTeams);
+            Team fixedTeam = teamsQueue.Dequeue();
 
             //prepare datetime - matches played on sundays
             DateTime firstRoundStartDate = new DateTime(YearOfStart.Year, 8, 1, 15, 0, 0);
@@ -42,34 +42,36 @@ namespace FootballSchedulerDLL
                 secondRoundStartDate = secondRoundStartDate.AddDays(1);
 
             //prepare the schedule
-            this.Schedule = new List<Matches>();
+            this.Schedule = new List<Match>();
 
             //generate the schedule
             for (int round = 0; round < teamsQueue.Count; round++)
             {
                 //recreate team's list - reattach fixed team in the beginning
                 //linked list will change every round, but the fixed team must stay in the beginning all the time
-                LinkedList<Teams> teamsLinkedList = new LinkedList<Teams>(teamsQueue);
+                LinkedList<Team> teamsLinkedList = new LinkedList<Team>(teamsQueue);
                 teamsLinkedList.AddFirst(fixedTeam);
 
                 do
                 {
-                    Teams t1 = teamsLinkedList.First.Value;
-                    Teams t2 = teamsLinkedList.Last.Value;
+                    Team t1 = teamsLinkedList.First.Value;
+                    Team t2 = teamsLinkedList.Last.Value;
 
                     //each team must play both home and away
-                    Matches m1 = new Matches();
+                    Match m1 = new Match();
                     m1.HomeTeamId = t1.Id;
                     m1.AwayTeamId = t2.Id;
+                    m1.LeagueId   = this.LoadedLeague.Id;
                     
-                    Matches m2 = new Matches();
+                    Match m2 = new Match();
                     m2.HomeTeamId = t2.Id;
                     m2.AwayTeamId = t1.Id;
+                    m2.LeagueId   = this.LoadedLeague.Id;
                     
                     //every even round switch every home & away team
                     if(round % 2 != 0)
                     {
-                        Matches mTemp = m1;
+                        Match mTemp = m1;
                         m1 = m2;
                         m2 = mTemp;
                     }
@@ -98,7 +100,7 @@ namespace FootballSchedulerDLL
         /// </summary>
         /// <returns>Matches to be played</returns>
         /// <exception cref="System.NullReferenceException">Thrown when schedule has not been generated yet.</exception>
-        public List<Matches> GetSchedule()
+        public List<Match> GetSchedule()
         {
             if (this.Schedule == null)
                 throw new NullReferenceException();
@@ -109,7 +111,7 @@ namespace FootballSchedulerDLL
         /// Just loads a league for now.
         /// </summary>
         /// <param name="league">League with its name.</param>
-        public void LoadLeague(Leagues league)
+        public void LoadLeague(League league)
         {
             this.LoadedLeague = league;
         }
@@ -120,7 +122,7 @@ namespace FootballSchedulerDLL
         /// </summary>
         /// <param name="teams">List of teams to be checked and eventually loaded into.</param>
         /// <returns></returns>
-        public bool LoadTeams(List<Teams> teams)
+        public bool LoadTeams(List<Team> teams)
         {
             //check if teams are not null
             if (teams == null)
@@ -134,7 +136,7 @@ namespace FootballSchedulerDLL
             //prepare a list for comparison
             List<int> checkList = new List<int>();
 
-            foreach(Teams t in teams)
+            foreach(Team t in teams)
             {
                 if (checkList.Exists(id => id == t.Id))
                     return false;
