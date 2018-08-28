@@ -2,6 +2,7 @@
 The library contains classes to generate fixtures. Cooperates with Football Scheduler WPF.
 ## Checklist
 Classes:
++ [ ] Football Entity - contains id, basic for auxiliary classes
 + [ ] IScheduler - interface for communication
 + [ ] RoundRobinScheduler - generating league fixtures
 + [ ] KnockOutScheduler - generating cup
