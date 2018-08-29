@@ -1,9 +1,9 @@
 using FootballSchedulerDLL.AuxiliaryClasses;
 
-namespace FootballSchedulerWPF
+namespace FootballSchedulerDLL.AuxiliaryClasses
 {
 
-    public class Match : FootballEntity
+    public class Match : AuxiliaryUnit, IMatch
     {
         public int LeagueId { get; set; }
         public System.DateTime TimeOfPlay { get; set; }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using FootballSchedulerWPF;
+using FootballSchedulerDLL.AuxiliaryClasses;
 
 namespace FootballSchedulerDLL
 {
     public class RoundRobinScheduler : IScheduler
     {
-        private List<Match> Schedule;
-        private List<Team> LoadedTeams;
-        private League LoadedLeague;
+        private List<IMatch> Schedule;
+        private List<ITeam> LoadedTeams;
+        private ILeague LoadedLeague;
         /// <summary>
         /// Contains dates of dates when each of the rounds starts (usually spring & autumn).
         /// </summary>
@@ -54,9 +54,9 @@ namespace FootballSchedulerDLL
             this.InputsCheck();
 
             //prepare queue list and get the fixed team, prepare the schedule
-            Queue<Team> teamsQueue = new Queue<Team>(this.LoadedTeams);
-            Team fixedTeam = teamsQueue.Dequeue();
-            this.Schedule = new List<Match>();
+            Queue<ITeam> teamsQueue = new Queue<ITeam>(this.LoadedTeams);
+            ITeam fixedTeam = teamsQueue.Dequeue();
+            this.Schedule = new List<IMatch>();
 
             //prepare datetime - matches played on sundays
             DatesOfRoundsStarts = this.CalculateDatesOfRoundsBeginnings();
@@ -66,15 +66,15 @@ namespace FootballSchedulerDLL
             {
                 //recreate team's list - reattach fixed team in the beginning
                 //linked list will change every round, but the fixed team must stay in the beginning all the time
-                LinkedList<Team> teamsLinkedList = new LinkedList<Team>(teamsQueue);
+                LinkedList<ITeam> teamsLinkedList = new LinkedList<ITeam>(teamsQueue);
                 teamsLinkedList.AddFirst(fixedTeam);
 
                 do
                 {
                     
                     //TODO Refactor - kick out inner loop into function
-                    Team t1 = teamsLinkedList.First.Value;
-                    Team t2 = teamsLinkedList.Last.Value;
+                    ITeam t1 = teamsLinkedList.First.Value;
+                    ITeam t2 = teamsLinkedList.Last.Value;
 
                     Tuple<Match, Match> pairOfMatches = this.GeneratePairOfMatches(round, t1, t2);
 
@@ -95,7 +95,7 @@ namespace FootballSchedulerDLL
             this.DatesOfRoundsStarts = null;
         }
 
-        private Tuple<Match, Match> GeneratePairOfMatches(int round, Team team1, Team team2)
+        private Tuple<Match, Match> GeneratePairOfMatches(int round, ITeam team1, ITeam team2)
         {
             //each team must play both home and away
             Match m1 = new Match()
@@ -133,7 +133,7 @@ namespace FootballSchedulerDLL
         /// </summary>
         /// <returns>Matches to be played</returns>
         /// <exception cref="System.NullReferenceException">Thrown when schedule has not been generated yet.</exception>
-        public List<Match> GetSchedule()
+        public List<IMatch> GetSchedule()
         {
             if (this.Schedule == null)
                 throw new NullReferenceException();
@@ -144,7 +144,7 @@ namespace FootballSchedulerDLL
         /// Just loads a league for now.
         /// </summary>
         /// <param name="league">League with its name.</param>
-        public void LoadLeague(League league)
+        public void LoadLeague(ILeague league)
         {
             this.LoadedLeague = league;
         }
@@ -155,7 +155,7 @@ namespace FootballSchedulerDLL
         /// </summary>
         /// <param name="teams">List of teams to be checked and eventually loaded into.</param>
         /// <returns></returns>
-        public bool LoadTeams(List<Team> teams)
+        public bool LoadTeams(List<ITeam> teams)
         {
             //check if teams are not null
             if (teams == null)
@@ -169,7 +169,7 @@ namespace FootballSchedulerDLL
             //prepare a list for comparison
             List<int> checkList = new List<int>();
 
-            foreach(Team t in teams)
+            foreach(ITeam t in teams)
             {
                 if (checkList.Exists(id => id == t.Id))
                     return false;

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FootballSchedulerWPF;
+using FootballSchedulerDLL.AuxiliaryClasses;
 
 namespace FootballSchedulerDLL
 {
     interface IScheduler
     {
         DateTime YearOfStart { get; set; }
-        void LoadLeague(League league);
-        bool LoadTeams(List<Team> teams);
+        void LoadLeague(ILeague league);
+        bool LoadTeams(List<ITeam> teams);
         void GenerateSchedule();
-        List<Match> GetSchedule();
+        List<IMatch> GetSchedule();
     }
 }

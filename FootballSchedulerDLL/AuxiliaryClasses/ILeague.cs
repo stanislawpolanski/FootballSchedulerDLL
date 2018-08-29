@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace FootballSchedulerDLL.AuxiliaryClasses
 {
-    public class FootballEntity
+    public interface ILeague
     {
-        public int Id { get; set; }
+        int Id { get; set; }
+        string Name { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using FootballSchedulerDLL;
-using FootballSchedulerWPF;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FootballSchedulerDLL.AuxiliaryClasses;
 
 
 namespace FootballSchedulerDLLTests
@@ -14,9 +14,8 @@ namespace FootballSchedulerDLLTests
         public void LoadTeams_WhenTeamsQuantityLessThanTwo_ReturnsFalse()
         {
             //try to load one team into the scheduler
-            //ARRAGE
-            List<Team> lt = this.CreateBlankTeams(1);
-
+            //ARRANGE
+            List<ITeam> lt = this.CreateBlankTeams(1);
             RoundRobinScheduler rrs = new RoundRobinScheduler();
 
             //ACT
@@ -31,7 +30,7 @@ namespace FootballSchedulerDLLTests
         {
             //try to load three (odd number) teams into the scheduler
             //ARRANGE
-            List<Team> teams = this.CreateBlankTeams(3);
+            List<ITeam> teams = this.CreateBlankTeams(3);
 
             RoundRobinScheduler rrs = new RoundRobinScheduler();
 
@@ -47,7 +46,7 @@ namespace FootballSchedulerDLLTests
         {
             //try to load null as teams into the scheduler;
             //ARRANGE
-            List<Team> teams = null;
+            List<ITeam> teams = null;
 
             RoundRobinScheduler rrs = new RoundRobinScheduler();
 
@@ -64,7 +63,7 @@ namespace FootballSchedulerDLLTests
             //try to load collection of teams. In the collection two teams have the same id.
             //ARRANGE
             //get teams
-            List<Team> teams = this.CreateBlankTeams(17);
+            List<ITeam> teams = this.CreateBlankTeams(17);
 
             //add one with non distinctive id
             Team nonDistinctiveIdTeam = new Team
@@ -100,9 +99,9 @@ namespace FootballSchedulerDLLTests
         /// </summary>
         /// <param name="teamsNumber">Number of teams.</param>
         /// <returns></returns>
-        private List<Team> CreateBlankTeams(int teamsNumber)
+        private List<ITeam> CreateBlankTeams(int teamsNumber)
         {
-            List<Team> teams = new List<Team>();
+            List<ITeam> teams = new List<ITeam>();
 
             for (int i = 1; i < teamsNumber + 1; i++)
             {
@@ -122,7 +121,7 @@ namespace FootballSchedulerDLLTests
         /// </summary>
         /// <param name="teams">Teams to be put into the scheduler.</param>
         /// <returns></returns>
-        private RoundRobinScheduler InvokeScheduler(List<Team> teams)
+        private RoundRobinScheduler InvokeScheduler(List<ITeam> teams)
         {
             RoundRobinScheduler rrs = new RoundRobinScheduler();
 
@@ -152,14 +151,14 @@ namespace FootballSchedulerDLLTests
             }
 
             //create teams
-            List<Team> teams = this.CreateBlankTeams(teamsNumber);
+            List<ITeam> teams = this.CreateBlankTeams(teamsNumber);
 
             //invoke scheduler
             RoundRobinScheduler rrs = this.InvokeScheduler(teams);
 
             //ACT
             rrs.GenerateSchedule();
-            List<Match> matches = rrs.GetSchedule();
+            List<IMatch> matches = rrs.GetSchedule();
 
             //ASSERT
             //loop through each match and mark him as played (true)

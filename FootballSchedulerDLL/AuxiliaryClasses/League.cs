@@ -1,9 +1,9 @@
 using FootballSchedulerDLL.AuxiliaryClasses;
 
-namespace FootballSchedulerWPF
+namespace FootballSchedulerDLL.AuxiliaryClasses
 {
 
-    public class League : FootballEntity
+    public class League : AuxiliaryUnit, ILeague
     {
         public string Name { get; set; }
     }

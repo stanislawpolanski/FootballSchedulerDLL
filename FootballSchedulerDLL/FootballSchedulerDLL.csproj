@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuxiliaryClasses\FootballEntity.cs" />
+    <Compile Include="AuxiliaryClasses\AuxiliaryUnit.cs" />
+    <Compile Include="AuxiliaryClasses\ILeague.cs" />
+    <Compile Include="AuxiliaryClasses\IMatch.cs" />
+    <Compile Include="AuxiliaryClasses\ITeam.cs" />
     <Compile Include="AuxiliaryClasses\League.cs" />
     <Compile Include="AuxiliaryClasses\Match.cs" />
     <Compile Include="AuxiliaryClasses\Team.cs" />
