@@ -167,13 +167,12 @@ namespace FootballSchedulerDLL
 
             //check if each team have distinctive id
             //prepare a list for comparison
-            List<int> checkList = new List<int>();
+            HashSet<int> checkSet = new HashSet<int>();
 
             foreach(ITeam t in teams)
             {
-                if (checkList.Exists(id => id == t.Id))
+                if (!checkSet.Add(t.Id))
                     return false;
-                checkList.Add(t.Id);
             }
 
             //if the all the checks above are ok then assign the property and return true

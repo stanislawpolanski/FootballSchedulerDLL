@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootballSchedulerDLL.AuxiliaryClasses
 {
-    public class AuxiliaryUnit
+    public class AuxiliaryItem
     {
         public int Id { get; set; }
     }
