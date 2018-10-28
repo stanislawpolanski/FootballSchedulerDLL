@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\Sketch.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
