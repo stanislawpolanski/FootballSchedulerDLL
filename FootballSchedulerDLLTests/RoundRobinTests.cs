@@ -162,7 +162,7 @@ namespace FootballSchedulerDLLTests
 
             //ASSERT
             //loop through each match and mark him as played (true)
-            matches.ForEach(x => checkList[(int)x.HomeTeamId - 1][(int)x.AwayTeamId - 1] = true);
+            matches.ForEach(x => checkList[(int)x.HomeTeam.Id - 1][(int)x.AwayTeam.Id - 1] = true);
 
             //check if all of the matches has been played
             //however any team can not play itself

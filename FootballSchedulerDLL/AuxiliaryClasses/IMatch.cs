@@ -11,7 +11,7 @@ namespace FootballSchedulerDLL.AuxiliaryClasses
         int Id { get; set; }
         int LeagueId { get; set; }
         System.DateTime TimeOfPlay { get; set; }
-        int HomeTeamId { get; set; }
-        int AwayTeamId { get; set; }
+        ITeam HomeTeam { get; set; }
+        ITeam AwayTeam { get; set; }
     }
 }

@@ -100,16 +100,16 @@ namespace FootballSchedulerDLL
             //each team must play both home and away
             Match m1 = new Match()
             {
-                HomeTeamId = team1.Id,
-                AwayTeamId = team2.Id,
+                HomeTeam = team1,
+                AwayTeam = team2,
                 LeagueId = this.LoadedLeague.Id
             };
 
 
             Match m2 = new Match()
             {
-                HomeTeamId = team2.Id,
-                AwayTeamId = team1.Id,
+                HomeTeam = team2,
+                AwayTeam = team1,
                 LeagueId = this.LoadedLeague.Id
             };
 
