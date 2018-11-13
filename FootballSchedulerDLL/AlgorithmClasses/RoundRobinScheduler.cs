@@ -61,6 +61,7 @@ namespace FootballSchedulerDLL
             //prepare datetime - matches played on sundays
             DatesOfRoundsStarts = this.CalculateDatesOfRoundsBeginnings();
 
+            //TODO take care of memory complexity (no need for additional linked list)
             //generate the schedule
             for (int round = 0; round < teamsQueue.Count; round++)
             {
